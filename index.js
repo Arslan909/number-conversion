@@ -227,10 +227,20 @@ optionsSelect.addEventListener('change', function () {
 function conversion(value) {
     const selectedOption = optionsSelect.value;
 
+    let negativeString = false;
+    if (value.startsWith('-')) {
+        negativeString = true;
+        value = value.slice(1);
+    }
+
     if (selectedOption === 'binary-decimal') {
         if (value.match(/^[01]+$/)) {
             input.style.backgroundColor = "";
-            result.innerHTML = binaryToDecimal(parseInt(value));
+            let resultValue = binaryToDecimal(parseInt(value));
+            if (negativeString) {
+                resultValue = -resultValue;
+            }
+            result.innerHTML = resultValue;
             result.style.color = "#333";
             base.innerHTML = "x10";
         } else {
@@ -239,7 +249,11 @@ function conversion(value) {
         }
     } else if (selectedOption === 'decimal-binary') {
         if (!isNaN(value) && value.trim() !== "") {
-            result.innerHTML = decimalToBinary(parseInt(value));
+            let resultValue = decimalToBinary(parseInt(value));
+            if (negativeString) {
+                resultValue = -resultValue;
+            }
+            result.innerHTML = resultValue;
             result.style.color = "#333";
             base.innerHTML = "x2";
         } else {
@@ -249,7 +263,11 @@ function conversion(value) {
     } else if (selectedOption === 'binary-hexadecimal') {
         if (value.match(/^[01]+$/)) {
             input.style.backgroundColor = "";
-            result.innerHTML = binaryToHexadecimal(value);
+            let resultValue = binaryToHexadecimal(value);
+            if (negativeString) {
+                resultValue = -resultValue;
+            }
+            result.innerHTML = resultValue;
             result.style.color = "#333";
             base.innerHTML = "x16";
         } else {
@@ -258,7 +276,11 @@ function conversion(value) {
         }
     } else if (selectedOption === "hexadecimal-binary") {
         if (!isNaN(value) && value.trim() !== "") {
-            result.innerHTML = hexadecimalToBinary(value);
+            let resultValue = hexadecimalToBinary(value);
+            if (negativeString) {
+                resultValue = -resultValue;
+            }
+            result.innerHTML = resultValue;
             result.style.color = "#333";
         } else {
             result.innerHTML = 'invalid hexadecimal';
@@ -267,7 +289,11 @@ function conversion(value) {
     } else if (selectedOption === "binary-octal") {
         if (value.match(/^[01]+$/)) {
             input.style.backgroundColor = "";
-            result.innerHTML = binaryToOctal(value);
+            let resultValue = binaryToOctal(value);
+            if (negativeString) {
+                resultValue = -resultValue;
+            }
+            result.innerHTML = resultValue;
             result.style.color = "#333";
             base.innerHTML = "x8";
         } else {
@@ -277,7 +303,11 @@ function conversion(value) {
     } else if (selectedOption === "octal-binary") {
         if (value.match(/^[0-7]+$/)) {
             input.style.backgroundColor = "";
-            result.innerHTML = octalToBinary(value);
+            let resultValue = octalToBinary(value);
+            if (negativeString) {
+                resultValue = -resultValue;
+            }
+            result.innerHTML = resultValue;
             result.style.color = "#333";
             base.innerHTML = "x2";
         } else {
@@ -286,7 +316,11 @@ function conversion(value) {
         }
     } else if (selectedOption === 'decimal-hexadecimal') {
         if (!isNaN(value) && value.trim() !== "") {
-            result.innerHTML = decimalToHexadecimal(parseInt(value));
+            let resultValue = decimalToHexadecimal(parseInt(value));
+            if (negativeString) {
+                resultValue = -resultValue;
+            }
+            result.innerHTML = resultValue;
             result.style.color = "#333";
             base.innerHTML = "x16";
         } else {
@@ -298,6 +332,9 @@ function conversion(value) {
             const decimalResult = hexadecimalToDecimal(value);
             if (!isNaN(decimalResult)) {
                 input.style.backgroundColor = "";
+                if (negativeString) {
+                    decimalResult = -decimalResult;
+                }
                 result.innerHTML = decimalResult;
                 result.style.color = "#333";
             } else {
@@ -313,6 +350,9 @@ function conversion(value) {
             const decimalResult = octalToDecimal(value);
             if (!isNaN(decimalResult)) {
                 input.style.backgroundColor = "";
+                if (negativeString) {
+                    decimalResult = -decimalResult;
+                }
                 result.innerHTML = decimalResult;
                 result.style.color = "#333";
             } else {
@@ -325,7 +365,11 @@ function conversion(value) {
         }
     } else if (selectedOption === 'decimal-octal') {
         if (!isNaN(value) && value.trim() !== "") {
-            result.innerHTML = decimalToOctal(parseInt(value));
+            let resultValue = decimalToOctal(parseInt(value));
+            if (negativeString) {
+                resultValue = -resultValue;
+            }
+            result.innerHTML = resultValue;
             result.style.color = "#333";
             base.innerHTML = "x8";
         } else {
@@ -337,6 +381,9 @@ function conversion(value) {
             const hexadecimalResult = octalToHexadecimal(value);
             if (!isNaN(hexadecimalResult)) {
                 input.style.backgroundColor = "";
+                if (negativeString) {
+                    hexadecimalResult = -hexadecimalResult;
+                }
                 result.innerHTML = hexadecimalResult;
                 result.style.color = "#333";
                 base.innerHTML = "x16";
@@ -353,6 +400,9 @@ function conversion(value) {
             const octalResult = hexadecimalToOctal(value);
             if (!isNaN(octalResult)) {
                 input.style.backgroundColor = "";
+                if (negativeString) {
+                    octalResult = '-' + octalResult;
+                }
                 result.innerHTML = octalResult;
                 result.style.color = "#333";
                 base.innerHTML = "x8";
