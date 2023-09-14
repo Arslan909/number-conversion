@@ -372,3 +372,10 @@ button.addEventListener('click', () => {
     const value = input.value.trim();
     conversion(value)
 })
+
+input.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+        const value = input.value.trim();
+        conversion(value);
+    }
+});
