@@ -70,7 +70,34 @@ select {
 }
 
 h3 {
-    text-align: center;
-    margin-top: 20px;
-    color: #333;
+    margin-top: 5px;
+    /* color: #333; */
+    word-break: break-word;
+    border: 1px solid #ccc;
+    width: 94%;
+    padding: 10px;
+    font-size: 15px;
+    color: #999;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#base {
+    margin-top: 5px;
+    /* color: #333; */
+    word-break: break-word;
+    border: 1px solid #ccc;
+    width: 15%;
+    padding: 10px;
+    /* font-size: 15px; */
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #999;
+    height: 17px;
+    font-weight: bold;
+
+}
+
+.output-div {
+    display: flex;
 }
