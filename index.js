@@ -159,58 +159,6 @@ function octalToBinary(octalValue) {
     }
     return binaryNumber;
 }
-// might be using built in conversition function of js becasue not feel like doing it more 
-function decimalToHexadecimal(decimalValue) {
-    if (!isNaN(decimalValue)) {
-        return decimalValue.toString(16).toUpperCase();
-    } else {
-        return 'Invalid decimal';
-    }
-}
-function hexadecimalToDecimal(hexadecimalValue) {
-    const decimalNumber = parseInt(hexadecimalValue, 16);
-
-    if (!isNaN(decimalNumber)) {
-        return decimalNumber;
-    } else {
-        return 'Invalid hexadecimal';
-    }
-}
-function octalToDecimal(octalValue) {
-    const decimalNumber = parseInt(octalValue, 8);
-
-    if (!isNaN(decimalNumber)) {
-        return decimalNumber;
-    } else {
-        return 'Invalid octal';
-    }
-}
-function decimalToOctal(decimalValue) {
-    if (!isNaN(decimalValue)) {
-        return decimalValue.toString(8);
-    } else {
-        return 'Invalid decimal';
-    }
-}
-function octalToHexadecimal(octalValue) {
-    const decimalValue = parseInt(octalValue, 8);
-    if (!isNaN(decimalValue)) {
-        return decimalValue.toString(16).toUpperCase();
-    } else {
-        return 'Invalid octal';
-    }
-}
-function hexadecimalToOctal(hexadecimalValue) {
-    const decimalValue = parseInt(hexadecimalValue, 16);
-    if (!isNaN(decimalValue)) {
-        return decimalValue.toString(8);
-    } else {
-        return 'Invalid hexadecimal';
-    }
-}
-
-
-
 
 // Driver code 
 optionsSelect.addEventListener('change', function () {
@@ -223,198 +171,130 @@ optionsSelect.addEventListener('change', function () {
     }
 })
 
-
 function conversion(value) {
     const selectedOption = optionsSelect.value;
-
     let negativeString = false;
+
     if (value.startsWith('-')) {
         negativeString = true;
         value = value.slice(1);
     }
 
-    if (selectedOption === 'binary-decimal') {
-        if (value.match(/^[01]+$/)) {
-            input.style.backgroundColor = "";
-            let resultValue = binaryToDecimal(parseInt(value));
-            if (negativeString) {
-                resultValue = -resultValue;
-            }
-            result.innerHTML = resultValue;
-            result.style.color = "#333";
-            base.innerHTML = "x10";
-        } else {
-            result.innerHTML = 'non-binary';
-            input.style.backgroundColor = "#ffcccb";
+    const isValidBinary = value.match(/^[01]+$/);
+    const isValidDecimal = !isNaN(value) && value.trim() !== "";
+    const isValidHexadecimal = value.match(/^[0-9A-Fa-f]+$/);
+    const isValidOctal = value.match(/^[0-7]+$/);
+
+    input.style.backgroundColor = ""; // Reset background color
+
+    if (selectedOption === 'binary-decimal' && isValidBinary) {
+        let resultValue = binaryToDecimal(parseInt(value));
+        if (negativeString) {
+            resultValue = -resultValue;
         }
-    } else if (selectedOption === 'decimal-binary') {
-        if (!isNaN(value) && value.trim() !== "") {
-            let resultValue = decimalToBinary(parseInt(value));
-            if (negativeString) {
-                resultValue = -resultValue;
-            }
-            result.innerHTML = resultValue;
-            result.style.color = "#333";
-            base.innerHTML = "x2";
-        } else {
-            result.innerHTML = 'non-decimal';
-            input.style.backgroundColor = "#ffcccb";
+        result.innerHTML = resultValue;
+        base.innerHTML = "x10";
+    } else if (selectedOption === 'decimal-binary' && isValidDecimal) {
+        let resultValue = decimalToBinary(parseInt(value));
+        if (negativeString) {
+            resultValue = -resultValue;
         }
-    } else if (selectedOption === 'binary-hexadecimal') {
-        if (value.match(/^[01]+$/)) {
-            input.style.backgroundColor = "";
-            let resultValue = binaryToHexadecimal(value);
-            if (negativeString) {
-                resultValue = -resultValue;
-            }
-            result.innerHTML = resultValue;
-            result.style.color = "#333";
-            base.innerHTML = "x16";
-        } else {
-            result.innerHTML = 'non-binary';
-            input.style.backgroundColor = "#ffcccb";
+        result.innerHTML = resultValue;
+        base.innerHTML = "x2";
+    } else if (selectedOption === 'binary-hexadecimal' && isValidBinary) {
+        let resultValue = binaryToHexadecimal(value);
+        if (negativeString) {
+            resultValue = -resultValue;
         }
-    } else if (selectedOption === "hexadecimal-binary") {
-        if (!isNaN(value) && value.trim() !== "") {
-            let resultValue = hexadecimalToBinary(value);
-            if (negativeString) {
-                resultValue = -resultValue;
-            }
-            result.innerHTML = resultValue;
-            result.style.color = "#333";
-        } else {
-            result.innerHTML = 'invalid hexadecimal';
-            input.style.backgroundColor = "#ffcccb";
+        result.innerHTML = resultValue;
+        base.innerHTML = "x16";
+    } else if (selectedOption === 'hexadecimal-binary' && isValidHexadecimal) {
+        let resultValue = hexadecimalToBinary(value);
+        if (negativeString) {
+            resultValue = -resultValue;
         }
-    } else if (selectedOption === "binary-octal") {
-        if (value.match(/^[01]+$/)) {
-            input.style.backgroundColor = "";
-            let resultValue = binaryToOctal(value);
-            if (negativeString) {
-                resultValue = -resultValue;
-            }
-            result.innerHTML = resultValue;
-            result.style.color = "#333";
-            base.innerHTML = "x8";
-        } else {
-            result.innerHTML = 'non-binary';
-            input.style.backgroundColor = "#ffcccb";
+        result.innerHTML = resultValue;
+    } else if (selectedOption === 'binary-octal' && isValidBinary) {
+        let resultValue = binaryToOctal(value);
+        if (negativeString) {
+            resultValue = -resultValue;
         }
-    } else if (selectedOption === "octal-binary") {
-        if (value.match(/^[0-7]+$/)) {
-            input.style.backgroundColor = "";
-            let resultValue = octalToBinary(value);
-            if (negativeString) {
-                resultValue = -resultValue;
-            }
-            result.innerHTML = resultValue;
-            result.style.color = "#333";
-            base.innerHTML = "x2";
-        } else {
-            result.innerHTML = 'non-octal';
-            input.style.backgroundColor = "#ffcccb";
+        result.innerHTML = resultValue;
+        base.innerHTML = "x8";
+    } else if (selectedOption === 'octal-binary' && isValidOctal) {
+        let resultValue = octalToBinary(value);
+        if (negativeString) {
+            resultValue = -resultValue;
         }
-    } else if (selectedOption === 'decimal-hexadecimal') {
-        if (!isNaN(value) && value.trim() !== "") {
-            let resultValue = decimalToHexadecimal(parseInt(value));
-            if (negativeString) {
-                resultValue = -resultValue;
-            }
-            result.innerHTML = resultValue;
-            result.style.color = "#333";
-            base.innerHTML = "x16";
-        } else {
-            result.innerHTML = 'non-decimal';
-            input.style.backgroundColor = "#ffcccb";
+        result.innerHTML = resultValue;
+        base.innerHTML = "x2";
+    } else if (selectedOption === 'decimal-hexadecimal' && isValidDecimal) {
+        let resultValue = parseInt(value).toString(16).toUpperCase();
+        if (negativeString) {
+            resultValue = '-' + resultValue;
         }
-    } else if (selectedOption === 'hexadecimal-decimal') {
-        if (value.match(/^[0-9A-Fa-f]+$/)) {
-            const decimalResult = hexadecimalToDecimal(value);
-            if (!isNaN(decimalResult)) {
-                input.style.backgroundColor = "";
-                if (negativeString) {
-                    decimalResult = -decimalResult;
-                }
-                result.innerHTML = decimalResult;
-                result.style.color = "#333";
-            } else {
-                result.innerHTML = 'Invalid hexadecimal';
-                input.style.backgroundColor = "#ffcccb";
+        result.innerHTML = resultValue;
+        base.innerHTML = "x16";
+    } else if (selectedOption === 'hexadecimal-decimal' && isValidHexadecimal) {
+        const decimalResult = parseInt(value, 16);
+        if (!isNaN(decimalResult)) {
+            if (negativeString) {
+                decimalResult = -decimalResult;
             }
+            result.innerHTML = decimalResult;
         } else {
             result.innerHTML = 'Invalid hexadecimal';
             input.style.backgroundColor = "#ffcccb";
         }
-    } else if (selectedOption === 'octal-decimal') {
-        if (value.match(/^[0-7]+$/)) {
-            const decimalResult = octalToDecimal(value);
-            if (!isNaN(decimalResult)) {
-                input.style.backgroundColor = "";
-                if (negativeString) {
-                    decimalResult = -decimalResult;
-                }
-                result.innerHTML = decimalResult;
-                result.style.color = "#333";
-            } else {
-                result.innerHTML = 'Invalid octal';
-                input.style.backgroundColor = "#ffcccb";
-            }
-        } else {
-            result.innerHTML = 'Invalid octal';
-            input.style.backgroundColor = "#ffcccb";
-        }
-    } else if (selectedOption === 'decimal-octal') {
-        if (!isNaN(value) && value.trim() !== "") {
-            let resultValue = decimalToOctal(parseInt(value));
+    } else if (selectedOption === 'octal-decimal' && isValidOctal) {
+        const decimalResult = parseInt(value, 8);
+        if (!isNaN(decimalResult)) {
             if (negativeString) {
-                resultValue = -resultValue;
+                decimalResult = -decimalResult;
             }
-            result.innerHTML = resultValue;
-            result.style.color = "#333";
-            base.innerHTML = "x8";
-        } else {
-            result.innerHTML = 'non-decimal';
-            input.style.backgroundColor = "#ffcccb";
-        }
-    } else if (selectedOption === 'octal-hexadecimal') {
-        if (value.match(/^[0-7]+$/)) {
-            const hexadecimalResult = octalToHexadecimal(value);
-            if (!isNaN(hexadecimalResult)) {
-                input.style.backgroundColor = "";
-                if (negativeString) {
-                    hexadecimalResult = -hexadecimalResult;
-                }
-                result.innerHTML = hexadecimalResult;
-                result.style.color = "#333";
-                base.innerHTML = "x16";
-            } else {
-                result.innerHTML = 'Invalid octal';
-                input.style.backgroundColor = "#ffcccb";
-            }
+            result.innerHTML = decimalResult;
         } else {
             result.innerHTML = 'Invalid octal';
             input.style.backgroundColor = "#ffcccb";
         }
-    } else if (selectedOption === 'hexadecimal-octal') {
-        if (value.match(/^[0-9A-Fa-f]+$/)) {
-            const octalResult = hexadecimalToOctal(value);
-            if (!isNaN(octalResult)) {
-                input.style.backgroundColor = "";
-                if (negativeString) {
-                    octalResult = '-' + octalResult;
-                }
-                result.innerHTML = octalResult;
-                result.style.color = "#333";
-                base.innerHTML = "x8";
-            } else {
-                result.innerHTML = 'Invalid hexadecimal';
-                input.style.backgroundColor = "#ffcccb";
+    } else if (selectedOption === 'decimal-octal' && isValidDecimal) {
+        let resultValue = parseInt(value).toString(8);
+        if (negativeString) {
+            resultValue = '-' + resultValue;
+        }
+        result.innerHTML = resultValue;
+        base.innerHTML = "x8";
+    } else if (selectedOption === 'octal-hexadecimal' && isValidOctal) {
+        const hexadecimalValue = parseInt(value, 8);
+        const hexadecimalResult = hexadecimalValue.toString(16).toUpperCase();
+        if (!isNaN(hexadecimalResult)) {
+            if (negativeString) {
+                hexadecimalResult = '-' + hexadecimalResult;
             }
+            result.innerHTML = hexadecimalResult;
+            base.innerHTML = "x16";
+        } else {
+            result.innerHTML = 'Invalid octal';
+            input.style.backgroundColor = "#ffcccb";
+        }
+    } else if (selectedOption === 'hexadecimal-octal' && isValidHexadecimal) {
+        const decimalValue = parseInt(value, 16);
+        const octalResult = decimalValue.toString(8);
+        if (!isNaN(octalResult)) {
+            if (negativeString) {
+                octalResult = '-' + octalResult;
+            }
+            result.innerHTML = octalResult;
+            base.innerHTML = "x8";
         } else {
             result.innerHTML = 'Invalid hexadecimal';
             input.style.backgroundColor = "#ffcccb";
         }
+    } else {
+        result.innerHTML = 'Invalid input';
+        input.style.backgroundColor = "#ffcccb";
     }
+    result.style.color = "#333";
 }
 
 
@@ -422,6 +302,20 @@ button.addEventListener('click', () => {
     const value = input.value.trim();
     conversion(value)
 })
+
+input.addEventListener('input', () => {
+    const value = input.value.trim();
+    if(value === ""){
+        result.style.color = "#999"
+        input.value = "";
+        result.innerHTML = "Output"
+        base.innerHTML = ""
+        input.style.backgroundColor = ""
+    }else{
+
+        conversion(value);
+    }
+});
 
 input.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
