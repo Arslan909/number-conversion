@@ -236,23 +236,23 @@ function conversion(value) {
         result.innerHTML = resultValue;
         base.innerHTML = "x16";
     } else if (selectedOption === 'hexadecimal-decimal' && isValidHexadecimal) {
-        const decimalResult = parseInt(value, 16);
-        if (!isNaN(decimalResult)) {
+        let resultValue = parseInt(value, 16);
+        if (!isNaN(resultValue)) {
             if (negativeString) {
-                decimalResult = -decimalResult;
+                resultValue = -resultValue;
             }
-            result.innerHTML = decimalResult;
+            result.innerHTML = resultValue;
         } else {
             result.innerHTML = 'Invalid hexadecimal';
             input.style.backgroundColor = "#ffcccb";
         }
     } else if (selectedOption === 'octal-decimal' && isValidOctal) {
-        const decimalResult = parseInt(value, 8);
-        if (!isNaN(decimalResult)) {
+        let resultValue = parseInt(value, 8);
+        if (!isNaN(resultValue)) {
             if (negativeString) {
-                decimalResult = -decimalResult;
+                resultValue = -resultValue;
             }
-            result.innerHTML = decimalResult;
+            result.innerHTML = resultValue;
         } else {
             result.innerHTML = 'Invalid octal';
             input.style.backgroundColor = "#ffcccb";
@@ -265,26 +265,26 @@ function conversion(value) {
         result.innerHTML = resultValue;
         base.innerHTML = "x8";
     } else if (selectedOption === 'octal-hexadecimal' && isValidOctal) {
-        const hexadecimalValue = parseInt(value, 8);
-        const hexadecimalResult = hexadecimalValue.toString(16).toUpperCase();
-        if (!isNaN(hexadecimalResult)) {
+        let hexadecimalValue = parseInt(value, 8);
+        let resultValue = hexadecimalValue.toString(16).toUpperCase();
+        if (!isNaN(resultValue)) {
             if (negativeString) {
-                hexadecimalResult = '-' + hexadecimalResult;
+                resultValue = '-' + resultValue;
             }
-            result.innerHTML = hexadecimalResult;
+            result.innerHTML = resultValue;
             base.innerHTML = "x16";
         } else {
             result.innerHTML = 'Invalid octal';
             input.style.backgroundColor = "#ffcccb";
         }
     } else if (selectedOption === 'hexadecimal-octal' && isValidHexadecimal) {
-        const decimalValue = parseInt(value, 16);
-        const octalResult = decimalValue.toString(8);
-        if (!isNaN(octalResult)) {
+        let decimalValue = parseInt(value, 16);
+        let resultValue = decimalValue.toString(8);
+        if (!isNaN(resultValue)) {
             if (negativeString) {
-                octalResult = '-' + octalResult;
+                resultValue = '-' + resultValue;
             }
-            result.innerHTML = octalResult;
+            result.innerHTML = resultValue;
             base.innerHTML = "x8";
         } else {
             result.innerHTML = 'Invalid hexadecimal';
